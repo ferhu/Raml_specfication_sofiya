@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4fd5c11d-8e5a-4efc-823f-6aa3a17c50cc" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="round_robinFlow" doc:id="76268778-9b45-4b37-8d65-43437a95c7c7" initialState="started" maxConcurrency="12">
+		<http:listener doc:name="Listener" doc:id="159e8b57-bd41-4cc8-aca6-31a9cdf3bb90" config-ref="HTTP_Listener_config" path="/Roundrobin"/>
+		<round-robin doc:name="Round Robin" doc:id="9dfa816b-bbe4-4ee0-8398-0c6308809eb3" >
+			<route >
+				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="c29cb5eb-7996-472d-a8f0-966f88e343e9" />
+			</route>
+			<route >
+				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="6bd3b21a-04e5-4fde-8699-4b9f1519808d" />
+			</route>
+			<route >
+				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="36fb5ebe-2a60-40a8-9cc5-9503ebe51ae7" />
+			</route>
+		</round-robin>
+	</flow>
+</mule>
